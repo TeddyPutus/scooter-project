@@ -20,7 +20,9 @@ describe("Testing ScooterApp creation", () => {
         const toThrowErrorFn1 = () => {
             const app = new ScooterApp;
             const validUser = new User("teddy", "password", 29);
+            const validUser2 = new User("teddy2", "password123", 29);
             app.register(validUser);
+            app.register(validUser2);
             app.register(validUser);
           }
 
@@ -60,10 +62,12 @@ describe("Testing ScooterApp creation", () => {
         test("User can log in with correct details", () => {
             const app = new ScooterApp;
             const validUser = new User("teddy", "password", 29);
+            const validUser2 = new User("teddy2", "password123", 29);
             app.register(validUser);
+            app.register(validUser2);
 
-            app.login("teddy", "password");
-            expect(app.registeredUsers.teddy.loggedIn).toBe(true);
+            app.login("teddy2", "password123");
+            expect(app.registeredUsers.teddy2.loggedIn).toBe(true);
         })
 
         test("Throws error if username or password not recognised", () => {
@@ -208,6 +212,8 @@ describe("Testing ScooterApp creation", () => {
             scooter.charge = 100;
             app.addScooter("Manhattan", scooter);
             const validUser = new User("teddy", "password", 29);
+            const validUser2 = new User("teddy2", "password123", 29);
+            app.register(validUser2);
             app.register(validUser);
 
             app.login("teddy", "password");
