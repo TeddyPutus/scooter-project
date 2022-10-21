@@ -75,14 +75,58 @@ class ScooterApp {
     }
   }
 
+  rent(username, origin, destination){
+    //find user, check if logged in
+    if(this.isLoggedIn(username) === false) throw "Invalid user"
+    if(this.isLocationReal(origin) === false) throw "Invalid origin or destination!"
+    if(this.isLocationReal(destination) === false) throw "Invalid origin or destination!"
+
+    //everything is valid, see if there are scooter at origin
+    if(this.stations[origin].length < 1) throw "No scooters available :'("
+
+    //scooters exist, see if any are actually usable
+    for(let scooterSerial of this.stations[origin]){
+      let scooter = Scooter.findScooterBySerial(scooterSerial);
+      if(scooter.charge <= 20){
+        console.log("Scooter low on battery, please charge scooter")
+        scooter.recharge();
+      } else if(scooter.isBroken){
+        console.log("Scooter is broken, please send a repair request");
+        scooter.requestRepair();
+      } else{
+        //move scooter to destination
+        scooter.rent()
+        this.removeScooter(scooter);
+        this.addScooter(destination, scooter);
+        return;
+      }
+    }
+    throw "No scooters usable :'("
+  }
+
+  //helper functions for rent()
+  isLoggedIn(username){
+    for(let key in this.registeredUsers){
+      if(key === username){
+        if(this.registeredUsers[key]["loggedIn"]){ //found logged in user
+          return true  
+        }
+      }
+    }
+    return false
+  }
+
+  isLocationReal(location){
+    for(let key in this.stations){
+      if(key === location){
+        //found location
+        return true     
+      }
+    }
+    return false
+  }
+
   static scooterSessions = []; //this holds all instances of the ScooterApp class
 }
-
-const app = new ScooterApp;
-const validUser = new User("teddy", "password", 29);
-app.register(validUser);
-
-app.login("teddy", "password");
-
 
 module.exports = ScooterApp

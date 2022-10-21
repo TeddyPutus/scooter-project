@@ -8,6 +8,8 @@ class Scooter{
     this.charge = Math.floor(Math.random() * 100);
     this.isBroken = false;
     this.docked = true;
+
+    Scooter.scooterList.push(this);
   }
 
   rent(){
@@ -49,6 +51,16 @@ class Scooter{
 
     console.log('Repair complete');   
   }
+
+  static findScooterBySerial(serial){
+    for(let scooter of Scooter.scooterList){
+      if(scooter.serial === serial) {
+        return scooter
+      }
+    }
+  }
+
+  static scooterList = []
 }
 
 
