@@ -68,7 +68,7 @@ describe("Testing ScooterApp creation", () => {
             const app = new ScooterApp;
             const scooter = new Scooter("London");
             app.addScooter("Manhattan", scooter);
-            expect(scooter.location).toEqual("Manhattan");
+            expect(scooter.station).toEqual("Manhattan");
         });
         test("Throws error if scooter is not scooter object", () => {
             const app = new ScooterApp;
@@ -103,13 +103,6 @@ describe("Testing ScooterApp creation", () => {
     });
 
     describe("Renting a scooter", () => {
-        beforeEach(() => {
-            const app = new ScooterApp;
-            const scooter = new Scooter("Manhattan");
-            app.addScooter("Manhattan", scooter);
-            const validUser = new User("teddy", "password", 29);
-            app.register(validUser);
-        });
         test("Logged in user can rent a bike", () => {
             const app = new ScooterApp;
             const scooter = new Scooter("Manhattan");
