@@ -1,0 +1,18 @@
+sequenceDiagram
+    title Login User
+    actor User
+    User ->> ScooterApp : Login
+    activate ScooterApp
+    alt User doesn't exist
+        ScooterApp -->> Console : User doesn't exist!
+    else This is a new user
+        alt username and password correct
+            ScooterApp -->> Console : user has logged in successfully
+            User ->> ScooterApp: Set logged in value to true in registered user object
+        else username or password incorrect
+             ScooterApp -->> Console : Username or password is incorrect.
+        end
+    else Not sent a user/sent incomplete user
+        ScooterApp -->> Console : User invalid!
+    end
+    deactivate ScooterApp

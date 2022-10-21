@@ -1,0 +1,15 @@
+sequenceDiagram
+    title Remove scooter
+    Scooter ->> ScooterApp : Get scooter object
+    activate ScooterApp
+    alt Scooter is not a scooter object
+        ScooterApp -->> Console : Invalid input!
+    else Scooter is a scooter object
+        Scooter ->> ScooterApp : Get scooter serial number
+        alt serial number not in a station
+            ScooterApp -->> Console : Scooter not in a station!
+        else serial number found, scooter removed
+            ScooterApp -->> Console : Scooter removed successfully
+        end
+    end
+    deactivate ScooterApp

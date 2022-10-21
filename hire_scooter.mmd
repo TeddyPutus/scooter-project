@@ -1,0 +1,32 @@
+sequenceDiagram
+    actor User
+    User ->> ScooterApp: Hire(origin, destination)
+    activate ScooterApp
+    alt User not a user/User not registered
+        ScooterApp -->> Console: Invalid user
+    else origin/destination not station
+        ScooterApp -->> Console: Origin or destination invalid!
+    else User and stations are valid
+        alt No scooters at origin
+            ScooterApp -->> Console: No scooters available :'(
+        else scooters at origin
+            loop
+                ScooterApp ->> Scooter: Find first usable scooter
+                activate Scooter
+                alt Scooter charge <= 20
+                    Scooter -->> Console: Scooter low on battery, please charge scooter.recharge()
+                else isBroken = true
+                    Scooter -->> Console: Scooter is broken, please send a repair request. scooter.requestRepair()
+                else Scooter is usable
+                     Scooter -->> Console: Enjoy the ride!
+                end
+            end
+            alt No scooter found
+                ScooterApp -->> Console:  No scooters usable :'(
+            else
+                User -> ScooterApp: Take user object
+                ScooterApp -> Scooter: Add user to user property
+                ScooterApp -> Scooter: Move scooter to destination (remove scooter, add scooter)
+            end
+        end
+    end

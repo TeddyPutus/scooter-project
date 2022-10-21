@@ -1,0 +1,19 @@
+sequenceDiagram
+    title Register User
+    actor User
+    User ->> ScooterApp : Register
+    activate ScooterApp
+    alt User already exists
+        ScooterApp -->> Console : already registered
+    else This is a new user
+        alt User is over 17
+            ScooterApp -->> Console : user has been registered
+            User -> ScooterApp: User stored
+        else User is 17 or less
+             ScooterApp -->> Console : too young to register!
+        end
+    else Not sent a user/sent incomplete user
+        ScooterApp -->> Console : User invalid!
+    end
+    deactivate ScooterApp
+    

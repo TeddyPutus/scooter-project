@@ -1,0 +1,10 @@
+sequenceDiagram
+    title Add scooter
+    Scooter ->> ScooterApp : Get scooter object/location
+    activate ScooterApp
+    alt Scooter is not a scooter object/location doesn't exist
+        ScooterApp -->> Console : Invalid input!
+    else Scooter and location valid
+        ScooterApp -> Scooter: Add scooter to location
+    end
+    deactivate ScooterApp
